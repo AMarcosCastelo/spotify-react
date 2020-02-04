@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "spotify-react",
   "version": "1.0.0",
-  "description": "Boilerplate com storybook e variáveis de ambiente configuradas para melhor performance da aplicação",
+  "description": "Spotify done in React JS, just for study.",
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.js",
