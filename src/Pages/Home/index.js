@@ -1,0 +1,14 @@
+import React from 'react';
+import Search from 'Components/Search';
+import AlbunsFound from 'Components/AlbunsFound';
+
+const Home = () => {
+  return (
+    <>
+      <Search />
+      <AlbunsFound />
+    </>
+  );
+}
+
+export default Home;

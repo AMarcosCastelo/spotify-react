@@ -1,10 +1,23 @@
 'use strict';
 import { hot } from 'react-hot-loader';
 import React from 'react';
-import 'src/css/style.css';
+import Routes from './routes';
 
-function Title () {
-  return <h1 className="title">App React</h1>;
+import logo from './img/logo.png';
+import 'src/app.css';
+import 'src/global.css';
+
+const Title = () => {
+  return (
+    <div className="appContainer">
+      <div className="sideBar">
+        <img src={logo} />
+      </div>
+      <main>
+        <Routes />
+      </main>
+    </div>
+  );
 };
 
 export default hot(module)(Title);

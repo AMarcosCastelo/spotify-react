@@ -19,7 +19,7 @@ module.exports = {
   resolve: {
     alias: {
       src: join(__dirname, '..', 'src'),
-      components: join(__dirname, '..', 'src/components')
+      Components: join(__dirname, '..', 'src/Components')
     }
   },
 
