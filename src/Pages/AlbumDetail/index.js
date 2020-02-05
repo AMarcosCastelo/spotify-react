@@ -1,35 +1,88 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AlbumSongs from '../../Components/AlbumSongs';
-
-import './styles.css';
+import styled from 'styled-components';
 
 const AlbumDetail = () => {
   return (
     <>
       <Link to="/">
-        <button className="linkBack">{'< Voltar'}</button>
+        <ReturnBtn>{'< Voltar'}</ReturnBtn>
       </Link>
-      <section className="albumContainer">
+      <Container>
         <section className="containerDescription">
           <div className="albumDescription" >
-            <div className="albumContent">
-              <div className="divImg">
+            <Content>
+              <Image>
                 {/* <img src="" alt=""/> */}
-              </div>
-              <div className="albumFooter">
+              </Image>
+              <Footer>
                 <span>Nome do Album</span>
                 <span>Nome do Artista</span>
-              </div>
-            </div>
+              </Footer>
+            </Content>
           </div>
         </section>
-        <section className="musics">
+        <Musics>
           <AlbumSongs />
-        </section>
-      </section>
+        </Musics>
+      </Container>
     </>
   );
-}
+};
+
+const Container = styled.section`
+  display: flex;
+  padding: 30px;
+  margin-top: 20px;
+`;
+
+const ReturnBtn = styled.button`
+  background: transparent;
+  color: #FAFAFA;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity .4s;
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+const Musics = styled.section`
+  width: 100%;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Image = styled.div`
+  width: 250px;
+  height: 250px;
+  background-color: #FAFAFA;
+  & img {
+    width: 250px;
+  }
+`;
+
+const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  & span:first-child {
+    font-size: 18px;
+    color: #fff;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+  & span:last-child {
+    font-size: 16px;
+    color: #999999;
+  }
+`;
 
 export default AlbumDetail;
