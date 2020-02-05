@@ -1,0 +1,160 @@
+.musics {
+  padding: 0 30px;
+  width: 100%;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.musics ul {
+  list-style-type: none;
+}
+
+.musics ul li {
+  margin-bottom: 7px;
+}
+
+.liMusic {
+  color: #999999;
+  cursor: pointer;
+  opacity: .7;
+}
+
+.musicItem {
+  display: flex;
+  justify-content: space-between;
+  transition: background .4s;
+  padding: 7px;
+}
+
+
+.indiceMusic {
+  font-size: 16px !important;
+  margin-right: 10px;
+}
+
+.musicItem:hover {
+  background: #000;
+  color: #fff;
+}
+
+.musicItem span:first-child {
+  font-size: 14px;
+  color: #fff;
+}
+
+.musicItem span:last-child {
+  font-size: 14px;
+  color: #999999;
+}
+
+.equalizer {
+  height: 19px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  margin-right: 10px;
+}
+
+.bar {
+  display: inline-block;
+  width: 2px;
+  background-color: #1db954;
+  animation-duration: 500ms;
+  -webkit-animation-duration: 500ms;
+  animation-play-state: running;
+  -webkit-animation-play-state: running;
+  animation-direction: alternate;
+  -webkit-animation-direction: alternate;
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+.bar + .bar {
+  margin-left: 2px;
+}
+.bar1 {
+  animation-name: musicBeat-1;
+  animation-delay: 0ms;
+}
+@keyframes musicBeat-1 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar2 {
+  animation-name: musicBeat-2;
+  animation-delay: 300ms;
+}
+@keyframes musicBeat-2 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar3 {
+  animation-name: musicBeat-3;
+  animation-delay: 600ms;
+}
+@keyframes musicBeat-3 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar4 {
+  animation-name: musicBeat-4;
+  animation-delay: 900ms;
+}
+@keyframes musicBeat-4 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar5 {
+  animation-name: musicBeat-5;
+  animation-delay: 1200ms;
+}
+@keyframes musicBeat-5 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar6 {
+  animation-name: musicBeat-6;
+  animation-delay: 1500ms;
+}
+@keyframes musicBeat-6 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
+.bar7 {
+  animation-name: musicBeat-7;
+  animation-delay: 1800ms;
+}
+@keyframes musicBeat-7 {
+  from {
+    height: 1px;
+ }
+  to {
+    height: 19px;
+ }
+}
