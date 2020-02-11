@@ -1,23 +1,32 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import Album from '../Album';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import Album from '../Album';
 
-const AlbunsFound = () => {
+const AlbunsFound = ({ data }) => {
   return (
     <>
       <Albums>
-        <h4>Procurando...</h4>
         <AlbumsItems>
-          <Album />
-          <Album />
-          <Album />
-          <Album />
-          <Album />
+          {data.map((album) => (
+            <Album
+              key={album.id}
+              urlImage={album.image_url}
+              albumName={album.name_album}
+              artistName={album.name_artist}
+              id={album.id}
+            />
+          ))}
         </AlbumsItems>
       </Albums>
     </>
   )
 };
+
+const mapStateToProps = state => ({
+  data: state.searchReducer
+});
 
 const Albums = styled.section`
   padding: 20px;
@@ -36,4 +45,4 @@ const AlbumsItems = styled.div`
   overflow: auto;
 `;
 
-export default AlbunsFound;
+export default connect(mapStateToProps)(AlbunsFound);

@@ -1,14 +1,46 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import ActionUpdate from '../../actions';
+import api from '../../services/api';
+import { AuthContext } from '../../store/auth';
 
-const Search = () => {
+const Search = ({ data, handleData }) => {
   const [value, setValue] = useState('');
+  const [payload, setPayload] = useState([]);
+  const { userInfo } = useContext(AuthContext);
+
+  useEffect(() => {
+    handleData(payload);
+  }, [payload]);
+
+  async function getData () {
+    const response = await api.get('/search', {
+      headers: {
+        Authorization: `Bearer ${userInfo.user.access_token}`
+      },
+      params: {
+        q: value,
+        type: 'album'
+      }
+    });
+
+    setPayload(response.data.albums.items);
+  };
+
+  function handleSearch (event) {
+    if (event.key === 'Enter') {
+      getData();
+    };
+  }
 
   return (
     <Container>
       <label>Procure por artistas, álbuns e músicas</label>
       <Input
         type="text"
+        onKeyDown={handleSearch}
         onChange={(event) => setValue(event.target.value)}
         value={value}
         placeholder="Comece a escrever..."
@@ -16,6 +48,16 @@ const Search = () => {
     </Container>
   )
 };
+
+const mapStateToProps = state => ({
+  data: state.searchReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleData: (payload) => {
+    dispatch(ActionUpdate(payload));
+  }
+});
 
 const Container = styled.div`
   width: 100%;
@@ -41,4 +83,4 @@ const Input = styled.input`
   border-bottom: 1px solid #fff;
 `;
 
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

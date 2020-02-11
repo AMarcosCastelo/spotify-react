@@ -1,19 +1,19 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-
 import { Link } from 'react-router-dom';
 
-const Album = () => {
+const Album = ({ key, urlImage, albumName, artistName, id }) => {
   return (
-    <Link to="Album">
-      <Container>
+    <Link to={`Album:${id}`}>
+      <Container key={key}>
         <DivItem>
           <ImgAlbum>
-            <img src="" alt=""/>
+            <img src={urlImage} alt={albumName}/>
           </ImgAlbum>
           <FooterItem>
-            <span>Nome do Album</span>
-            <span>Nome do Artista</span>
+            <span>{albumName}</span>
+            <span>{artistName}</span>
           </FooterItem>
         </DivItem>
       </Container>
