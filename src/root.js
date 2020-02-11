@@ -1,24 +1,28 @@
 'use strict';
-import { hot } from 'react-hot-loader';
 import React from 'react';
-import Routes from './routes';
+import { hot } from 'react-hot-loader';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Auth as AuthProvider } from './store/auth';
 import styled, { createGlobalStyle } from 'styled-components';
+import App from './app';
 
 import logo from './img/logo.png';
 
-const App = () => {
+const Root = () => {
   return (
-    <>
+    <AuthProvider>
       <GlobalStyle />
       <Container>
         <SideBar>
           <img src={logo} />
         </SideBar>
         <Main>
-          <Routes />
+          <BrowserRouter>
+            <Route component={App} />
+          </BrowserRouter>
         </Main>
       </Container>
-    </>
+    </AuthProvider>
   );
 };
 
@@ -94,4 +98,4 @@ const Main = styled.main`
   padding: 10px;
 `;
 
-export default hot(module)(App);
+export default hot(module)(Root);
