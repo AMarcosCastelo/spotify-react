@@ -33,7 +33,6 @@ const App = ({ location }) => {
 
   return (
     <>
-      {console.log(userInfo)}
       <Routes />
     </>
   );

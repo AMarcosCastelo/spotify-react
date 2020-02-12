@@ -15,6 +15,8 @@ const searchReducer = (state = initialState, action = initialAction) => {
       return state;
     } else if (action.payload.length === 0) {
       return state;
+    } else if (state === action.payload) {
+      return state;
     }
 
     action.payload.forEach((album) => {

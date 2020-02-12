@@ -1,10 +1,43 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Album from '../Album';
+import { AuthContext } from '../../store/auth';
+import api from '../../services/api';
+import ActionUpdate from '../../actions';
 
-const AlbunsFound = ({ data }) => {
+const AlbunsFound = ({ data, handleData }) => {
+  const [payload, setPayload] = useState(data);
+  const { userInfo } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (payload.length !== 0) {
+      handleData(payload);
+    }
+  }, [payload]);
+
+  useEffect(() => {
+    async function getInitialData () {
+      if (payload.length === 0) {
+        const albums = [];
+        const response = await api.get('/me/player/recently-played', {
+          headers: {
+            Authorization: `Bearer ${userInfo.user.access_token}`
+          }
+        });
+
+        response.data.items.forEach((track) => {
+          albums.push(track.track.album);
+        });
+        setPayload(albums);
+      }
+    };
+
+    getInitialData();
+  }, []);
+
   return (
     <>
       <Albums>
@@ -28,6 +61,12 @@ const mapStateToProps = state => ({
   data: state.searchReducer
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  handleData: (payload) => {
+    dispatch(ActionUpdate(payload));
+  }
+});
+
 const Albums = styled.section`
   padding: 20px;
   & h4 {
@@ -45,4 +84,4 @@ const AlbumsItems = styled.div`
   overflow: auto;
 `;
 
-export default connect(mapStateToProps)(AlbunsFound);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbunsFound);

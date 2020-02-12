@@ -8,7 +8,7 @@ import { AuthContext } from '../../store/auth';
 
 const Search = ({ data, handleData }) => {
   const [value, setValue] = useState('');
-  const [payload, setPayload] = useState([]);
+  const [payload, setPayload] = useState(data);
   const { userInfo } = useContext(AuthContext);
 
   useEffect(() => {

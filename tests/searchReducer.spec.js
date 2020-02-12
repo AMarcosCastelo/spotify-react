@@ -206,6 +206,32 @@ describe('Search Reducer', () => {
       expect(searchReducer(before, action)).to.be.deep.equal(after);
     });
 
+    it('should return the latest state if payload is equal to the previous state', () => {
+      const before = deepFreezer([{
+        name_album: 'Use Your Illusion I',
+        name_artist: "Guns N' Roses",
+        image_url: 'https://i.scdn.co/image/25d16ea05bd64e90d793d23b792b3228f31924a4',
+        id: '0CxPbTRARqKUYighiEY9Sz'
+      }]);
+      const action = deepFreezer({
+        type: 'UNKNOWN',
+        payload: [{
+          name_album: 'Use Your Illusion I',
+          name_artist: "Guns N' Roses",
+          image_url: 'https://i.scdn.co/image/25d16ea05bd64e90d793d23b792b3228f31924a4',
+          id: '0CxPbTRARqKUYighiEY9Sz'
+        }]
+      });
+      const after = [{
+        name_album: 'Use Your Illusion I',
+        name_artist: "Guns N' Roses",
+        image_url: 'https://i.scdn.co/image/25d16ea05bd64e90d793d23b792b3228f31924a4',
+        id: '0CxPbTRARqKUYighiEY9Sz'
+      }];
+
+      expect(searchReducer(before, action)).to.be.deep.equal(after);
+    });
+
     it('should return the latest state if state before is undefined', () => {
       const before = undefined;
       const action = deepFreezer({});
