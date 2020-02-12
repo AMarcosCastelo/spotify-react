@@ -7,4 +7,21 @@ const convertToHumanTime = (duration) => {
   return `${m}:${s}`;
 }
 
-export default convertToHumanTime;
+const verifyStatus = (state) => {
+  switch (state) {
+    case 401:
+      return {
+        action: false,
+        endPoint: '/Login'
+      };
+    case 200:
+      return {
+        action: true,
+        endPoint: ''
+      }
+    default:
+      break;
+  }
+}
+
+export { convertToHumanTime, verifyStatus };

@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ActionUpdate from '../../actions';
 import api from '../../services/api';
 import { AuthContext } from '../../store/auth';
+import { verifyStatus } from '../../Utils/index';
 
 const Search = ({ data, handleData }) => {
   const [value, setValue] = useState('');
@@ -25,8 +27,12 @@ const Search = ({ data, handleData }) => {
         type: 'album'
       }
     });
-
-    setPayload(response.data.albums.items);
+    const status = verifyStatus(response.status);
+    if (status.action) {
+      setPayload(response.data.albums.items);
+    } else {
+      return <Redirect to={status.endPoint} />
+    }
   };
 
   function handleSearch (event) {

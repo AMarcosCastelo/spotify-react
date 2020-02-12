@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai';
-import convertToHumanTime from '../src/Utils';
+import { convertToHumanTime } from '../src/Utils';
 
 describe('convertToHumanTime', () => {
   it('Should convertToHumanTime exist', () => {

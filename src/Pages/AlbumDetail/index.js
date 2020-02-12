@@ -1,9 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import AlbumSongs from '../../Components/AlbumSongs';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useContext, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import AlbumSongs from '../../Components/AlbumSongs';
+import api from '../../services/api';
+import { AuthContext } from '../../store/auth';
+import { verifyStatus } from '../../Utils/index';
 
-const AlbumDetail = () => {
+const AlbumDetail = ({ match }) => {
+  const [data, setData] = useState({
+    nameArtist: '',
+    nameAlbum: '',
+    imgUrl: '',
+    tracks: []
+  });
+  const { userInfo } = useContext(AuthContext);
+
+  useEffect(() => {
+    async function getMusicsFromAlbum () {
+      const response = await api.get(`/albums/${match.params.id.replace(':', '')}`, {
+        headers: {
+          Authorization: `Bearer ${userInfo.user.access_token}`
+        }
+      });
+      const status = verifyStatus(response.status);
+      if (status.action) {
+        setData({
+          nameArtist: response.data.artists[0].name,
+          nameAlbum: response.data.name,
+          imgUrl: response.data.images[0].url,
+          tracks: response.data.tracks.items
+        });
+      } else {
+        return <Redirect to={status.endPoint} />
+      }
+    }
+
+    getMusicsFromAlbum();
+  }, []);
+
   return (
     <>
       <Link to="/">
@@ -14,17 +49,17 @@ const AlbumDetail = () => {
           <div className="albumDescription" >
             <Content>
               <Image>
-                {/* <img src="" alt=""/> */}
+                <img src={data.imgUrl} alt={data.nameAlbum}/>
               </Image>
               <Footer>
-                <span>Nome do Album</span>
-                <span>Nome do Artista</span>
+                <span>{data.nameAlbum}</span>
+                <span>{data.nameArtist}</span>
               </Footer>
             </Content>
           </div>
         </section>
         <Musics>
-          <AlbumSongs />
+          <AlbumSongs tracks={data.tracks} />
         </Musics>
       </Container>
     </>

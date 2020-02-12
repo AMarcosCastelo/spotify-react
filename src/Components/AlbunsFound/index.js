@@ -1,48 +1,36 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Album from '../Album';
-import { AuthContext } from '../../store/auth';
-import api from '../../services/api';
-import ActionUpdate from '../../actions';
 
-const AlbunsFound = ({ data, handleData }) => {
-  const [payload, setPayload] = useState(data);
-  const { userInfo } = useContext(AuthContext);
+const AlbunsFound = ({ data }) => {
+  const [albums, setAlbums] = useState(data);
 
   useEffect(() => {
-    if (payload.length !== 0) {
-      handleData(payload);
-    }
-  }, [payload]);
-
-  useEffect(() => {
-    async function getInitialData () {
-      if (payload.length === 0) {
-        const albums = [];
-        const response = await api.get('/me/player/recently-played', {
-          headers: {
-            Authorization: `Bearer ${userInfo.user.access_token}`
-          }
-        });
-
-        response.data.items.forEach((track) => {
-          albums.push(track.track.album);
-        });
-        setPayload(albums);
+    if (data.length === 0) {
+      const localData = JSON.parse(localStorage.getItem('albums'));
+      if (localData) {
+        if (localData.length === 0) {
+          localStorage.setItem('albums', JSON.stringify(data));
+          setAlbums(data);
+        } else {
+          setAlbums(localData);
+        }
+      } else {
+        localStorage.setItem('albums', JSON.stringify(data));
       }
-    };
-
-    getInitialData();
-  }, []);
+    } else {
+      localStorage.setItem('albums', JSON.stringify(data));
+      setAlbums(data);
+    }
+  }, [data]);
 
   return (
     <>
       <Albums>
         <AlbumsItems>
-          {data.map((album) => (
+          {albums.map((album) => (
             <Album
               key={album.id}
               urlImage={album.image_url}
@@ -59,12 +47,6 @@ const AlbunsFound = ({ data, handleData }) => {
 
 const mapStateToProps = state => ({
   data: state.searchReducer
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleData: (payload) => {
-    dispatch(ActionUpdate(payload));
-  }
 });
 
 const Albums = styled.section`
@@ -84,4 +66,4 @@ const AlbumsItems = styled.div`
   overflow: auto;
 `;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlbunsFound);
+export default connect(mapStateToProps)(AlbunsFound);

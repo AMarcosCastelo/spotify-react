@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import convertToHumanTime from 'src/Utils';
+import { convertToHumanTime } from 'src/Utils';
 
 import './styles.css';
 
-const AlbumSongs = () => {
+const AlbumSongs = ({ tracks }) => {
   const [play, setPlay] = useState(false);
 
   const animation = () => {
@@ -24,18 +25,19 @@ const AlbumSongs = () => {
   return (
     <Musics>
       <ul>
-        {Array.from({ length: 10 }).map((music, index) => (
+        {console.log(tracks)}
+        {tracks.map((music, index) => (
           <LiMusic key={index}>
             <Music onClick={() => setPlay(!play)}>
               <span>
                 <IndexMusic>{index + 1}. </IndexMusic>
-                Nome da Música
+                {music.name}
               </span>
               <span>
                 <Equalizer>
                   {play ? animation() : ''}
                 </Equalizer>
-                {convertToHumanTime()}
+                {convertToHumanTime(music.duration_ms)}
               </span>
             </Music>
           </LiMusic>
