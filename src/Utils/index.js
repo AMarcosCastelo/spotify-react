@@ -7,7 +7,7 @@ const convertToHumanTime = (duration) => {
   return `${m}:${s}`;
 }
 
-const verifyStatus = (state) => {
+const verifyStatus = (state = {}) => {
   switch (state) {
     case 401:
       return {
@@ -20,7 +20,7 @@ const verifyStatus = (state) => {
         endPoint: ''
       }
     default:
-      break;
+      return state
   }
 }
 
