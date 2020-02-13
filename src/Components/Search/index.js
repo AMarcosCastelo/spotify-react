@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ActionUpdate from '../../actions';
 import api from '../../services/api';
@@ -18,20 +17,28 @@ const Search = ({ data, handleData }) => {
   }, [payload]);
 
   async function getData () {
-    const response = await api.get('/search', {
-      headers: {
-        Authorization: `Bearer ${userInfo.user.access_token}`
-      },
-      params: {
-        q: value,
-        type: 'album'
+    try {
+      const response = await api.get('/search', {
+        headers: {
+          Authorization: `Bearer ${userInfo.user.access_token}`
+        },
+        params: {
+          q: value,
+          type: 'album'
+        },
+        validateStatus (status) {
+          return status;
+        }
+      });
+      const status = verifyStatus(response.status);
+      if (status.action) {
+        setPayload(response.data.albums.items);
+      } else {
+        localStorage.removeItem('objUser');
+        window.location.href = status.endPoint;
       }
-    });
-    const status = verifyStatus(response.status);
-    if (status.action) {
-      setPayload(response.data.albums.items);
-    } else {
-      return <Redirect to={status.endPoint} />
+    } catch (error) {
+      console.error(error);
     }
   };
 

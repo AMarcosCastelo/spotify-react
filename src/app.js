@@ -1,14 +1,32 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 'use strict';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, createContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import Routes from './routes';
 import { AuthContext } from './store/auth';
-import { Redirect } from 'react-router-dom';
+
+const AppContext = createContext();
 
 const App = ({ location }) => {
   const { userInfo, setUserInfo, setToken } = useContext(AuthContext);
   const { isUserLoggedIn } = userInfo;
   const objUser = localStorage.getItem('objUser');
+
+  const useLoading = () => (
+    <div className="useLoading">
+      <div className="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     if (location.hash !== '') {
@@ -32,10 +50,14 @@ const App = ({ location }) => {
   }
 
   return (
-    <>
+    <AppContext.Provider
+      value={{
+        useLoading
+      }}
+    >
       <Routes />
-    </>
+    </AppContext.Provider>
   );
 };
 
-export default App;
+export { App, AppContext };

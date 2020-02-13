@@ -61,8 +61,10 @@ const Albums = styled.section`
 const AlbumsItems = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-height: 450px;
-  max-width: 900px;
+  height: 100%;
+  max-height: 510px;
+  width: 100%;
+  max-width: 970px;
   overflow: auto;
 `;
 

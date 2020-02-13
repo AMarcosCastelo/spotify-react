@@ -25,7 +25,6 @@ const AlbumSongs = ({ tracks }) => {
   return (
     <Musics>
       <ul>
-        {console.log(tracks)}
         {tracks.map((music, index) => (
           <LiMusic key={index}>
             <Music onClick={() => setPlay(!play)}>
