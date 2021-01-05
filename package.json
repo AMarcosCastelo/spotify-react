@@ -68,7 +68,7 @@
     "@storybook/addon-links": "^5.3.8",
     "@storybook/addons": "^5.3.8",
     "@storybook/react": "^5.3.8",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
